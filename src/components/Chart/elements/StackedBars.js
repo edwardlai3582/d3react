@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class StackedBars extends Component{
   render(){
-console.log(this.props.datas);
+//console.log(this.props.datas);
     let qq=[];
     let h=[];
     for(let i=0; i<this.props.datas.length;i++){

@@ -1,0 +1,8 @@
+#TopChart {
+  position: relative;
+  width: 90%;
+  left: 5%;
+  background-color: #01BCB5;
+  padding: 20px 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}

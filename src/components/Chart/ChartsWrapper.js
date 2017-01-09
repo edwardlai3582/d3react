@@ -1,12 +1,69 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import '../../styles/ChartsWrapper.css'
+import ChartWrapper from './ChartWrapper';
+import LineChart from './charts/LineChart';
+import BarChart from './charts/BarChart';
+import StackedBarChart from './charts/StackedBarChart';
+import GroupedBarChart from './charts/GroupedBarChart';
+import GroupedLineChart from './charts/GroupedLineChart';
 
-import LineChart from './LineChart';
-import BarChart from './BarChart';
-import StackedBarChart from './StackedBarChart';
-import GroupedBarChart from './GroupedBarChart';
-import GroupedLineChart from './GroupedLineChart';
 
 class ChartsWrapper extends Component {
+  constructor() {
+    super();
+    this.state = {
+      memoryChecked: true,
+      cpuChecked: true,
+      network_throughputChecked: true,
+      network_packetChecked: true,
+      errorsChecked: true,
+      width: 500,
+    };
+    this.updateSize = this.updateSize.bind(this);
+    this.onCheck = this.onCheck.bind(this);
+  }
+  componentWillMount(){
+      window.addEventListener('resize', (event)=>{
+        this.updateSize();
+      });
+  }
+
+  componentDidMount() {
+      this.updateSize();
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('resize', this.updateSize);
+  }
+
+  updateSize(){
+      let node = ReactDOM.findDOMNode(this);
+      //let parentWidth=node.getBoundingClientRect().width;//$(node).width();
+      this.setState({
+        width:node.getBoundingClientRect().width,
+      });
+  }
+
+  onCheck(e) {
+    let checkedValue = e.target.value;
+
+    if(checkedValue === "memory"){
+      this.setState({memoryChecked: !this.state.memoryChecked});
+    }
+    else if(checkedValue === "cpu"){
+      this.setState({cpuChecked: !this.state.cpuChecked});
+    }
+    else if(checkedValue === "network_throughput"){
+      this.setState({network_throughputChecked: !this.state.network_throughputChecked});
+    }
+    else if(checkedValue === "network_packet"){
+      this.setState({network_packetChecked: !this.state.network_packetChecked});
+    }
+    else if(checkedValue === "errors"){
+      this.setState({errorsChecked: !this.state.errorsChecked});
+    }
+  }
 
   render() {
     let header = this.props.response.header;
@@ -37,19 +94,83 @@ class ChartsWrapper extends Component {
     });
 
     return (
-      <div>
-        <p>SERVER ID: {header.target_name}</p>
-        <p>FROM: {Date(header.time_range.start)}</p>
-        <p>TO: {Date(header.time_range.end)}</p>
-        <p>RECORD COUNT: {header.recordCount}</p>
-        <LineChart width={900} height={200} chartId={'testL'} data={cpu_usage}/>
-        <BarChart  width={900} height={200} chartId={'testB'} data={memory_usage}/>
-        <StackedBarChart  width={900} height={200} chartId={'testS'} colors={['teal','blue', 'red']} datas={[errorsSystem,errorsSensor,errorsComponent]}/>
-        <GroupedBarChart  width={900} height={200} chartId={'testG'} colors={['salmon','blue']} datas={[network_throughputIn,network_throughputOut]}/>
-        <GroupedLineChart width={900} height={200} chartId={'testG'} colors={['orange','purple']} datas={[network_packetIn,network_packetOut]}/>
+      <div className="ChartsWrapper">
+        <section className="noFlex">
+          <h3>INFO</h3>
+          <div>
+            <p><strong>SERVER ID:</strong> {header.target_name}</p>
+            <p><strong>FROM:</strong> {Date(header.time_range.start)}</p>
+            <p><strong>TO:</strong> {Date(header.time_range.end)}</p>
+            <p><strong>RECORD COUNT:</strong> {header.recordCount}</p>
+          </div>
+        </section>
+
+        <section className="noFlex">
+          <h3>FILTER</h3>
+          <div>
+            <label>
+              <input type="checkbox" value="memory" checked={this.state.memoryChecked} onChange={this.onCheck} />
+                MEMORY
+            </label>
+            <label>
+              <input type="checkbox" value="cpu" checked={this.state.cpuChecked} onChange={this.onCheck} />
+                CPU
+            </label>
+            <label>
+              <input type="checkbox" value="network_throughput" checked={this.state.network_throughputChecked} onChange={this.onCheck} />
+                NETWORK THROUGHTPUT
+            </label>
+            <label>
+              <input type="checkbox" value="network_packet" checked={this.state.network_packetChecked} onChange={this.onCheck} />
+                NETWORK PACKET
+            </label>
+            <label>
+              <input type="checkbox" value="errors" checked={this.state.errorsChecked} onChange={this.onCheck} />
+                ERRORS
+            </label>
+          </div>  
+        </section>
+
+        {this.state.memoryChecked ? (
+          <ChartWrapper chartId={'memory usage'} data={memory_usage}  widthChanged={this.state.width}>
+            <LineChart />
+          </ChartWrapper>
+        ) : (
+          ""
+        )}
+        {this.state.cpuChecked ? (
+          <ChartWrapper chartId={'cpu usage'} data={cpu_usage} widthChanged={this.state.width}>
+            <BarChart />
+          </ChartWrapper>
+        ) : (
+          ""
+        )}
+        {this.state.network_throughputChecked ? (
+          <ChartWrapper chartId={'network throughput'} colors={['salmon','blue']} datas={[network_throughputIn,network_throughputOut]} widthChanged={this.state.width}>
+            <GroupedBarChart />
+          </ChartWrapper>
+        ) : (
+          ""
+        )}
+        {this.state.network_packetChecked ? (
+          <ChartWrapper chartId={'network packet'} colors={['orange','purple']} datas={[network_packetIn,network_packetOut]}  widthChanged={this.state.width}>
+            <GroupedLineChart />
+          </ChartWrapper>
+        ) : (
+          ""
+        )}
+        {this.state.errorsChecked ? (
+          <ChartWrapper chartId={'errors'} colors={['teal','blue', 'red']} datas={[errorsSystem,errorsSensor,errorsComponent]} widthChanged={this.state.width} >
+            <StackedBarChart />
+          </ChartWrapper>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
 }
+/*
 
+*/
 export default ChartsWrapper;

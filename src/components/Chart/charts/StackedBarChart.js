@@ -1,46 +1,23 @@
 import * as d3 from "d3";
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
-import Axis from './Axis';
-import Grid from './Grid';
-import GroupedBars from './GroupedBars';
+import Axis from '../elements/Axis';
+import Grid from '../elements/Grid';
+import StackedBars from '../elements/StackedBars';
+//import ToolTip from '../elements/ToolTip';
 
-class GroupedBarChart extends Component{
+class StackedBarChart extends Component{
   constructor() {
     super();
     this.state = {
-      width: 800,
       tooltip:{
         display:false,
         data1:{key:'',value:''},
         data2:{key:'',value:''}
       }
     };
-
-  }
-
-  componentWillMount(){
-
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount(){
-
-  }
-
-  updateSize(){
-      let node = ReactDOM.findDOMNode(this);
-      let parentWidth=node.getBoundingClientRect().width;//$(node).width();
-      //console.log('parentWidth='+parentWidth)
-      if(parentWidth<this.props.width){
-          this.setState({width:parentWidth-20});
-      }else{
-          this.setState({width:this.props.width});
-      }
+    //this.showToolTip = this.showToolTip.bind(this);
+    //this.hideToolTip = this.hideToolTip.bind(this);
   }
 
   showToolTip(e){
@@ -72,10 +49,9 @@ class GroupedBarChart extends Component{
 
   render(){
     let data1=this.props.datas[0];
-    let data2=this.props.datas[1];
 
     let margin = {top: 10, right: 50, bottom: 20, left: 100},
-        w = this.state.width - (margin.left + margin.right),
+        w = this.props.width - (margin.left + margin.right),
         h = this.props.height - (margin.top + margin.bottom);
 
     data1.forEach(function (d) {
@@ -95,17 +71,17 @@ class GroupedBarChart extends Component{
         .range([0, w])
         .domain(data1.map((d) => d.date ));
 
-    let Max= this.props.datas.reduce((accumulator, currentValue)=>{
-      let submax = currentValue.reduce((accumulator, currentValue)=>{
-          if(currentValue.value > accumulator) accumulator= currentValue.value;
-          return accumulator;
-      }, 0);
-      if(submax > accumulator) accumulator= submax;
-      return accumulator;
-    }, 0);
+    let totalMax=0;
+    for(let i=0;i<this.props.datas[0].length;i++){
+      let temp=0;
+      for(let j=0;j<this.props.datas.length;j++){
+        temp+=this.props.datas[j][i].value
+      }
+      if(temp > totalMax) totalMax=temp;
+    }
 
     let y = d3.scaleLinear()
-        .domain([0, Max])
+        .domain([0,totalMax])
         .range([h, 0]);
 
     let yAxis = d3.axisLeft(y)//.ticks(5);
@@ -117,13 +93,13 @@ class GroupedBarChart extends Component{
     let transform='translate(' + margin.left + ',' + margin.top + ')';
 
     return (
-      <div>
-        <svg id={this.props.chartId} width={this.state.width} height={this.props.height}>
+      <div className="svgWrapper">
+        <svg id={this.props.chartId} width={this.props.width} preserveAspectRatio="xMinYMin meet">
           <g transform={transform}>
             <Grid h={h} grid={yGrid} gridType="y"/>
             <Axis h={h} axis={yAxis} axisType="y" />
 
-            <GroupedBars h={h} datas={[data1,data2]} x={x} y={y} colors={this.props.colors}/>
+            <StackedBars h={h} colors={this.props.colors} data={data1} datas={popo}  x={x} y={y} />
           </g>
         </svg>
       </div>
@@ -132,7 +108,7 @@ class GroupedBarChart extends Component{
 }
 //
 
-GroupedBarChart.defaultProps = {
+StackedBarChart.defaultProps = {
   width: 800,
   height: 300,
   chartId: 'v1_chart',
@@ -148,4 +124,4 @@ GroupedBarChart.defaultProps = {
   ]
 };
 
-export default GroupedBarChart;
+export default StackedBarChart;

@@ -1,0 +1,16 @@
+.ChartWrapper {
+  position: relative;;
+  width: 48%;
+
+  background-color: red;
+}
+
+.ChartWrapper h3{
+  background-color: green;
+  margin: 0;
+}
+
+.svgWrapper{
+
+  background-color: white;
+}

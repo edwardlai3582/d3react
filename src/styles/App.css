@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Oleo+Script');
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #01BCB5;
+}
+
+.App {
+  background-color: #01BCB5;
+  padding: 0;
+  margin: 0;
+}
+
+.App-header h2{
+  padding: 5px 15px;
+  margin: 0;
+  background-color: #164F56;
+  color: white;
+  font-size: 26px;
+  font-family: 'Oleo Script', cursive;
+}

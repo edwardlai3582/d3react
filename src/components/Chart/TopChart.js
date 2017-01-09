@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fetchMock from 'fetch-mock';
 import mockResponse from '../../mockResponse';
-
+import '../../styles/TopChart.css';
 import ChartsWrapper from './ChartsWrapper';
 
 
@@ -21,8 +21,9 @@ class TopChart extends Component {
 
     let fromString = "2016-12-10T00:56:11.000Z";
     let toString =   "2017-01-05T00:56:11.000Z";
+    let serverid = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
 
-    return fetch(`/server_stat/123?from=${fromString}&to=${toString}`)
+    return fetch(`/server_stat/${serverid}?from=${fromString}&to=${toString}`)
       .then((response) => {
         return response.json()
       })
@@ -34,7 +35,7 @@ class TopChart extends Component {
 
   render() {
     return (
-      <div>
+      <div id="TopChart">
         <section>
           <button onClick={this.mockGet}>
             REFRESH

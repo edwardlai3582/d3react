@@ -1,0 +1,41 @@
+.ChartsWrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+}
+.ChartsWrapper section {
+    margin-bottom: 20px;
+}
+
+.noFlex {
+  flex: none;
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.noFlex h3{
+  background-color: #AD0953;
+  margin: 0;
+  color: white;
+  padding: 5px 10px;
+  font-size: 20p;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.noFlex > div {
+  padding: 10px;
+}
+
+.noFlex p {
+  padding: 0px;
+  margin: 0;
+}
+
+.noFlex label {
+  display: inline-block;
+  margin: 5px;
+}
