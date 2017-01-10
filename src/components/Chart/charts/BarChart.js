@@ -20,7 +20,7 @@ class BarChart extends Component{
     let data=this.props.data;
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
-    let margin = {top: 10, right: 30, bottom: 20, left: 80},
+    let margin = {top: 10, right: 30, bottom: 25, left: 80},
         w = svgWidth - (margin.left + margin.right),
         h = svgHeight - (margin.top + margin.bottom);
 
@@ -55,6 +55,8 @@ class BarChart extends Component{
             <Axis h={h} axis={xAxis} axisType="x" />
             <Bars h={h} data={data} x={x} y={y} color={this.props.color} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} />
           </g>
+          {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}
+          {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2}>{this.props.yLabel}</text></g>}
         </svg>
       </div>
     );

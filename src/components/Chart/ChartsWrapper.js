@@ -156,35 +156,35 @@ class ChartsWrapper extends Component {
             </section>
 
             {this.state.memoryChecked ? (
-              <ChartWrapper title={"memory"} legend={["usage","available"]} colors={["#7B4A12","#E49135"]} datas={[memory_usage,memory_available]} svgWidth={this.state.svgWidth} >
+              <ChartWrapper title={"memory"} xLabel={"time"} yLabel={"KB"} legend={["usage","available"]} colors={["#7B4A12","#E49135"]} datas={[memory_usage,memory_available]} svgWidth={this.state.svgWidth} >
                 <StackedBarChart />
               </ChartWrapper>
             ) : (
               ""
             )}
             {this.state.cpuChecked ? (
-              <ChartWrapper title={"cpu usage"} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth}>
+              <ChartWrapper title={"cpu usage"} xLabel={"time"} yLabel={""} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth}>
                 <LineChart />
               </ChartWrapper>
             ) : (
               ""
             )}
             {this.state.network_throughputChecked ? (
-              <ChartWrapper title={"network throughput"} legend={["in","out"]} colors={["salmon","navy"]} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth}>
+              <ChartWrapper title={"network throughput"} xLabel={"time"} yLabel={"KB"} legend={["in","out"]} colors={["salmon","navy"]} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth}>
                 <GroupedBarChart />
               </ChartWrapper>
             ) : (
               ""
             )}
             {this.state.network_packetChecked ? (
-              <ChartWrapper title={"network packet"} legend={["in","out"]} colors={["orange","purple"]} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth}>
+              <ChartWrapper title={"network packet"} xLabel={"time"} yLabel={""} legend={["in","out"]} colors={["orange","purple"]} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth}>
                 <GroupedLineChart />
               </ChartWrapper>
             ) : (
               ""
             )}
             {this.state.errorsChecked ? (
-              <ChartWrapper title={"errors"} legend={["system","sensor", "component"]} colors={["#5D4EA8","#3187C2", "#67C2A3"]} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} >
+              <ChartWrapper title={"errors"} xLabel={"time"} yLabel={""} legend={["system","sensor", "component"]} colors={["#5D4EA8","#3187C2", "#67C2A3"]} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} >
                 <StackedBarChart />
               </ChartWrapper>
             ) : (

@@ -21,7 +21,7 @@ class StackedBarChart extends Component{
     let data1=this.props.datas[0];
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
-    let margin = {top: 10, right: 30, bottom: 20, left: 80},
+    let margin = {top: 10, right: 30, bottom: 25, left: 120},
         w = svgWidth - (margin.left + margin.right),
         h = svgHeight - (margin.top + margin.bottom);
 
@@ -72,6 +72,8 @@ class StackedBarChart extends Component{
             <Axis h={h} axis={xAxis} axisType="x" />
             <StackedBars h={h} colors={this.props.colors} data={data1} datas={totalDatas}  x={x} y={y} />
           </g>
+          {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}
+          {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2}>{this.props.yLabel}</text></g>}
         </svg>
       </div>
     );

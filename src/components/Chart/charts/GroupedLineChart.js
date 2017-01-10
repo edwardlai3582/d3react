@@ -20,7 +20,7 @@ class GroupedLineChart extends Component{
     let data2=this.props.datas[1];
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
-    let margin = {top: 10, right: 30, bottom: 20, left: 80},
+    let margin = {top: 10, right: 30, bottom: 25, left: 80},
         w = svgWidth - (margin.left + margin.right),
         h = svgHeight - (margin.top + margin.bottom);
 
@@ -79,6 +79,8 @@ class GroupedLineChart extends Component{
               <path className="line shadow" d={line(data)} strokeLinecap="round" fill="none" stroke={this.props.colors[0]} strokeWidth="2"/>
               <path className="line shadow" d={line(data2)} strokeLinecap="round" fill="none" stroke={this.props.colors[1]} strokeWidth="2"/>
             </g>
+            {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}
+            {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2}>{this.props.yLabel}</text></g>}
           </svg>
         </div>
     );

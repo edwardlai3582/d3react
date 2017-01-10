@@ -59,7 +59,6 @@ class TopChart extends Component {
         this.setState({id: event.target.value});
     }
     if(event.target.id === 'from'){
-      console.log(event.target.value)
         this.setState({from: event.target.value+'Z'});
     }
     if(event.target.id === 'to'){
