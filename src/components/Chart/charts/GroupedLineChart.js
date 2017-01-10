@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import React, { Component } from 'react';
 
-import Dots from '../elements/Dots';
+//import Dots from '../elements/Dots';
 import Axis from '../elements/Axis';
 import Grid from '../elements/Grid';
 import ToolTip from '../elements/ToolTip';
@@ -124,7 +124,7 @@ class GroupedLineChart extends Component{
 
       return (
           <div className="svgWrapper">
-              <svg id={this.props.chartId} width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
+              <svg width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
 
                   <g transform={transform}>
                     <Grid h={h} grid={yGrid} gridType="y"/>

@@ -95,7 +95,7 @@ class BarChart extends Component{
 
     return (
       <div className="svgWrapper">
-        <svg id={this.props.chartId}  width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
+        <svg width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
           <g transform={transform}>
             <Grid h={h} grid={yGrid} gridType="y"/>
             <Axis h={h} axis={yAxis} axisType="y" />

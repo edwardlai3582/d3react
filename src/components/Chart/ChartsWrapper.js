@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import '../../styles/ChartsWrapper.css'
-import ChartWrapper from './ChartWrapper';
-import LineChart from './charts/LineChart';
-import BarChart from './charts/BarChart';
-import StackedBarChart from './charts/StackedBarChart';
-import GroupedBarChart from './charts/GroupedBarChart';
-import GroupedLineChart from './charts/GroupedLineChart';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import "../../styles/ChartsWrapper.css"
+import ChartWrapper from "./ChartWrapper";
+import LineChart from "./charts/LineChart";
+import BarChart from "./charts/BarChart";
+import StackedBarChart from "./charts/StackedBarChart";
+import GroupedBarChart from "./charts/GroupedBarChart";
+import GroupedLineChart from "./charts/GroupedLineChart";
 
 
 class ChartsWrapper extends Component {
@@ -24,7 +24,7 @@ class ChartsWrapper extends Component {
     this.onCheck = this.onCheck.bind(this);
   }
   componentWillMount(){
-      window.addEventListener('resize', (event)=>{
+      window.addEventListener("resize", (event)=>{
         this.updateSize();
       });
   }
@@ -34,7 +34,7 @@ class ChartsWrapper extends Component {
   }
 
   componentWillUnmount(){
-    window.removeEventListener('resize', this.updateSize);
+    window.removeEventListener("resize", this.updateSize);
   }
 
   updateSize(){
@@ -141,35 +141,35 @@ class ChartsWrapper extends Component {
         </section>
 
         {this.state.memoryChecked ? (
-          <ChartWrapper chartId={'memory usage'} color={"#C62326"} data={memory_usage}  svgWidth={this.state.svgWidth}>
+          <ChartWrapper title={"memory usage"} color={"#C62326"} data={memory_usage}  svgWidth={this.state.svgWidth}>
             <LineChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.cpuChecked ? (
-          <ChartWrapper chartId={'cpu usage'} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth}>
+          <ChartWrapper title={"cpu usage"} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth}>
             <BarChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.network_throughputChecked ? (
-          <ChartWrapper chartId={'network throughput'} colors={['salmon','navy']} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth}>
+          <ChartWrapper title={"network throughput"} legend={["in","out"]} colors={["salmon","navy"]} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth}>
             <GroupedBarChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.network_packetChecked ? (
-          <ChartWrapper chartId={'network packet'} colors={['orange','purple']} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth}>
+          <ChartWrapper title={"network packet"} legend={["in","out"]} colors={["orange","purple"]} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth}>
             <GroupedLineChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.errorsChecked ? (
-          <ChartWrapper chartId={'errors'} colors={['#5D4EA8','#3187C2', '#67C2A3']} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} >
+          <ChartWrapper title={"errors"} legend={["system","sensor", "component"]} colors={["#5D4EA8","#3187C2", "#67C2A3"]} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} >
             <StackedBarChart />
           </ChartWrapper>
         ) : (

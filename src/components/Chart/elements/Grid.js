@@ -19,7 +19,7 @@ class Grid extends Component{
   render() {
     var translate = "translate(0,"+(this.props.h)+")";
     return (
-      <g ref={(g) => { this.gNode = g; }} className="grid" transform={this.props.gridType==='x'?translate:""}>
+      <g ref={(g) => { this.gNode = g; }} className="gridx" transform={this.props.gridType==='x'?translate:""}>
       </g>
     );
   }
