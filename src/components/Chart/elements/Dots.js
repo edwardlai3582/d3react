@@ -10,7 +10,7 @@ class Dots extends Component{
           r="5"
           cx={this.props.x(d.date)+this.props.xOffset}
           cy={this.props.y(d.value)}
-          fill="#7dc7f4"
+          fill={this.props.color}
           key={i}
           onMouseOver={this.props.showToolTip} onMouseOut={this.props.hideToolTip}
           data-key={d.time} data-value={d.value}

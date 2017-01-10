@@ -14,6 +14,7 @@
   width: 100%;
   background-color: white;
   border-radius: 5px;
+  font-size: 18px;
 }
 
 .noFlex h3{
@@ -38,4 +39,8 @@
 .noFlex label {
   display: inline-block;
   margin: 5px;
+}
+
+input[type=checkbox] {
+  transform: scale(1.5);
 }

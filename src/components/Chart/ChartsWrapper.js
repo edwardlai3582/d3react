@@ -18,7 +18,7 @@ class ChartsWrapper extends Component {
       network_throughputChecked: true,
       network_packetChecked: true,
       errorsChecked: true,
-      width: 500,
+      svgWidth: 500,
     };
     this.updateSize = this.updateSize.bind(this);
     this.onCheck = this.onCheck.bind(this);
@@ -39,9 +39,18 @@ class ChartsWrapper extends Component {
 
   updateSize(){
       let node = ReactDOM.findDOMNode(this);
-      //let parentWidth=node.getBoundingClientRect().width;//$(node).width();
+      let width = node.getBoundingClientRect().width;
+      let svgWidth = 0;
+      //console.log(width);
+      if(width <= 575) {
+        svgWidth = width;
+      }
+      else{
+        svgWidth = width*0.48;
+      }
+
       this.setState({
-        width:node.getBoundingClientRect().width,
+        svgWidth: svgWidth
       });
   }
 
@@ -128,39 +137,39 @@ class ChartsWrapper extends Component {
               <input type="checkbox" value="errors" checked={this.state.errorsChecked} onChange={this.onCheck} />
                 ERRORS
             </label>
-          </div>  
+          </div>
         </section>
 
         {this.state.memoryChecked ? (
-          <ChartWrapper chartId={'memory usage'} data={memory_usage}  widthChanged={this.state.width}>
+          <ChartWrapper chartId={'memory usage'} color={"#C62326"} data={memory_usage}  svgWidth={this.state.svgWidth}>
             <LineChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.cpuChecked ? (
-          <ChartWrapper chartId={'cpu usage'} data={cpu_usage} widthChanged={this.state.width}>
+          <ChartWrapper chartId={'cpu usage'} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth}>
             <BarChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.network_throughputChecked ? (
-          <ChartWrapper chartId={'network throughput'} colors={['salmon','blue']} datas={[network_throughputIn,network_throughputOut]} widthChanged={this.state.width}>
+          <ChartWrapper chartId={'network throughput'} colors={['salmon','navy']} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth}>
             <GroupedBarChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.network_packetChecked ? (
-          <ChartWrapper chartId={'network packet'} colors={['orange','purple']} datas={[network_packetIn,network_packetOut]}  widthChanged={this.state.width}>
+          <ChartWrapper chartId={'network packet'} colors={['orange','purple']} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth}>
             <GroupedLineChart />
           </ChartWrapper>
         ) : (
           ""
         )}
         {this.state.errorsChecked ? (
-          <ChartWrapper chartId={'errors'} colors={['teal','blue', 'red']} datas={[errorsSystem,errorsSensor,errorsComponent]} widthChanged={this.state.width} >
+          <ChartWrapper chartId={'errors'} colors={['#5D4EA8','#3187C2', '#67C2A3']} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} >
             <StackedBarChart />
           </ChartWrapper>
         ) : (

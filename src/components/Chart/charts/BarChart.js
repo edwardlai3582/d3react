@@ -53,9 +53,12 @@ class BarChart extends Component{
 
     let data=this.props.data;
 
-    let margin = {top: 10, right: 50, bottom: 20, left: 100},
-        w = this.props.width - (margin.left + margin.right),
-        h = this.props.height - (margin.top + margin.bottom);
+    let svgWidth = this.props.svgWidth;
+    let svgHeight = this.props.svgWidth*0.5;
+    //console.log("h: "+this.props.height);
+    let margin = {top: 10, right: 30, bottom: 20, left: 80},
+        w = svgWidth - (margin.left + margin.right),
+        h = svgHeight - (margin.top + margin.bottom);
 
     data.forEach(function (d) {
         d.date = d3.isoParse(d.time);
@@ -92,12 +95,12 @@ class BarChart extends Component{
 
     return (
       <div className="svgWrapper">
-        <svg id={this.props.chartId}  width={this.props.width} preserveAspectRatio="xMinYMin meet">
+        <svg id={this.props.chartId}  width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
           <g transform={transform}>
             <Grid h={h} grid={yGrid} gridType="y"/>
             <Axis h={h} axis={yAxis} axisType="y" />
 
-            <Bars h={h} data={data} x={x} y={y} color={"teal"} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} />
+            <Bars h={h} data={data} x={x} y={y} color={this.props.color} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} />
             <ToolTip tooltip={this.state.tooltip}/>
           </g>
         </svg>
@@ -105,16 +108,5 @@ class BarChart extends Component{
     );
   }
 }
-//
-
-BarChart.defaultProps = {
-  width: 0,
-  height: 400,
-  chartId: 'v1_chart',
-  data: [
-      {time:'2016-12-09T04:41:52.000Z',value:100},
-      {time:'2016-12-11T14:04:04.000Z',value:150}
-  ]
-};
 
 export default BarChart;

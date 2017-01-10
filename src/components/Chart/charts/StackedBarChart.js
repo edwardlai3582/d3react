@@ -50,9 +50,12 @@ class StackedBarChart extends Component{
   render(){
     let data1=this.props.datas[0];
 
-    let margin = {top: 10, right: 50, bottom: 20, left: 100},
-        w = this.props.width - (margin.left + margin.right),
-        h = this.props.height - (margin.top + margin.bottom);
+    let svgWidth = this.props.svgWidth;
+    let svgHeight = this.props.svgWidth*0.5;
+    //console.log("h: "+this.props.height);
+    let margin = {top: 10, right: 30, bottom: 20, left: 80},
+        w = svgWidth - (margin.left + margin.right),
+        h = svgHeight - (margin.top + margin.bottom);
 
     data1.forEach(function (d) {
         d.date = d3.isoParse(d.time);
@@ -94,7 +97,7 @@ class StackedBarChart extends Component{
 
     return (
       <div className="svgWrapper">
-        <svg id={this.props.chartId} width={this.props.width} preserveAspectRatio="xMinYMin meet">
+        <svg id={this.props.chartId} width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
           <g transform={transform}>
             <Grid h={h} grid={yGrid} gridType="y"/>
             <Axis h={h} axis={yAxis} axisType="y" />
@@ -106,22 +109,5 @@ class StackedBarChart extends Component{
     );
   }
 }
-//
-
-StackedBarChart.defaultProps = {
-  width: 800,
-  height: 300,
-  chartId: 'v1_chart',
-  datas: [
-    [
-        {time:'2016-12-09T04:41:52.000Z',value:100},
-        {time:'2016-12-11T14:04:04.000Z',value:150}
-    ],
-    [
-        {time:'2016-12-09T04:41:52.000Z',value:100},
-        {time:'2016-12-11T14:04:04.000Z',value:50}
-    ]
-  ]
-};
 
 export default StackedBarChart;

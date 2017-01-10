@@ -1,16 +1,36 @@
 .ChartWrapper {
   position: relative;;
   width: 48%;
-
-  background-color: red;
+  flex:1;
+  margin-right: 5px;
+  background-color: white;
+  text-align: center;
 }
 
 .ChartWrapper h3{
-  background-color: green;
-  margin: 0;
+  background-color: #F27390;
+  margin: 0px;
+  padding: 5px;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
 }
 
 .svgWrapper{
-
   background-color: white;
+}
+
+.grid {
+    stroke: lightgrey;
+    opacity: 1;
+}
+
+.axis {
+
+}
+
+@media only screen and (max-width: 656px) {
+  .ChartWrapper {
+    width: 100%;
+  }
 }
