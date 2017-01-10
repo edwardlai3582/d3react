@@ -1,11 +1,9 @@
 import * as d3 from "d3";
 import React, { Component } from 'react';
-//import ReactDOM from 'react-dom';
 
 import Axis from '../elements/Axis';
 import Grid from '../elements/Grid';
 import Bars from '../elements/Bars';
-import ToolTip from '../elements/ToolTip';
 
 class BarChart extends Component{
   constructor() {
@@ -16,74 +14,29 @@ class BarChart extends Component{
         data:{key:'',value:''}
       }
     };
-    this.showToolTip = this.showToolTip.bind(this);
-    this.hideToolTip = this.hideToolTip.bind(this);
-  }
-
-  showToolTip(e){
-      e.target.setAttribute('fill', '#7dc7f4');
-      this.setState({
-        tooltip:{
-          display:true,
-          data: {
-            key:e.target.getAttribute('data-key'),
-            value:e.target.getAttribute('data-value')
-          },
-          pos:{
-            x:+e.target.getAttribute('x') + e.target.getAttribute('width')/2,
-            y:e.target.getAttribute('y')
-          }
-        }
-      });
-  }
-
-  hideToolTip(e){
-      e.target.setAttribute('fill', 'teal');
-      this.setState({
-        tooltip:{
-          display:false,
-          data:{key:'',value:''}
-        }
-      });
   }
 
   render(){
-//console.log("From Barchart:"+this.props.width)
-//console.log("From Barchart:"+this.props.height)
-
     let data=this.props.data;
-
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
-    //console.log("h: "+this.props.height);
     let margin = {top: 10, right: 30, bottom: 20, left: 80},
         w = svgWidth - (margin.left + margin.right),
         h = svgHeight - (margin.top + margin.bottom);
 
-    data.forEach(function (d) {
+    data.forEach((d) => {
         d.date = d3.isoParse(d.time);
     });
-    //console.log(data);
 
     let x = d3.scaleBand()
         .range([0, w], .1)
         .domain(data.map((d) => d.date ));
-    /*
-    d3.scaleTime()
-        .range([0, w], .1)
-        .domain(d3.extent(data, function (d) {
-            return d.date;
-        }))
-    */
-
 
     let y = d3.scaleLinear()
-        .domain([0,d3.max(data,function(d){
-            return d.value;
-        })])
+        .domain([0,d3.max(data, (d) => ( d.value ))])
         .range([h, 0]);
 
-    let yAxis = d3.axisLeft(y)//.ticks(5);
+    let yAxis = d3.axisLeft(y);
 
     let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat(""));
 
@@ -101,7 +54,6 @@ class BarChart extends Component{
             <Axis h={h} axis={yAxis} axisType="y" />
             <Axis h={h} axis={xAxis} axisType="x" />
             <Bars h={h} data={data} x={x} y={y} color={this.props.color} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} />
-            <ToolTip tooltip={this.state.tooltip}/>
           </g>
         </svg>
       </div>

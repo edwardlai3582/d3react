@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 class ToolTip extends Component{
-  render(){
 
-      var visibility="hidden";
-      var transform="";
-      var x=0;
-      var y=0;
-      var width=150,height=80;
-      var transformText='translate('+width/2+','+(height/2-15)+')';
-      var transformArrow="";
+  render(){
+      let visibility="hidden";
+      let transform="";
+      let x=0;
+      let y=0;
+      let width=150,height=80;
+      let transformText='translate('+width/2+','+(height/2-15)+')';
+      let transformArrow="";
 
       let dataKey = this.props.tooltip.data.key.split("T");
       let day = dataKey[0].split("-");
@@ -20,12 +20,11 @@ class ToolTip extends Component{
       }
 
       if(this.props.tooltip.display===true){
-        var position = this.props.tooltip.pos;
+        let position = this.props.tooltip.pos;
 
         x= position.x;
         y= position.y;
         visibility="visible";
-        //console.log(x,y);
 
         if(y>height){
             transform='translate(' + (x-width/2) + ',' + (y-height-20) + ')';

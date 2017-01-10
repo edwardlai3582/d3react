@@ -6,7 +6,7 @@ https://illl48.github.io/Juniper/
 
 About
 -------------
-* Use [fetch-mock](https://github.com/wheresrhys/fetch-mock) to provide response.
+* Use [fetch-mock](https://github.com/wheresrhys/fetch-mock) to provide response. (In ./src/mockResponse.js)
 * Chart component is in ./src/components/Chart
 
 Install
