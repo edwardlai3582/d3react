@@ -1,7 +1,7 @@
 .ChartWrapper {
   position: relative;;
   width: 48%;
-  flex:1;
+  flex: 1 0 auto;
   margin-right: 5px;
   background-color: white;
   text-align: center;
