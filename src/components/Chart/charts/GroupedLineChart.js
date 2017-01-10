@@ -93,7 +93,7 @@ class GroupedLineChart extends Component{
 
       let yAxis = d3.axisLeft(y)//.ticks(5);
 
-      //let xAxis = d3.axisBottom(x).ticks(1);
+      let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat(""));
       /*
       .tickValues(
         data.map(function(d,i){
@@ -131,7 +131,7 @@ class GroupedLineChart extends Component{
                     <Grid h={h} grid={xGrid} gridType="x"/>
 
                     <Axis h={h} axis={yAxis} axisType="y" />
-
+                    <Axis h={h} axis={xAxis} axisType="x" />
                     <path className="line shadow" d={line(data)} strokeLinecap="round" fill="none" stroke={this.props.colors[0]} strokeWidth="2"/>
                     <path className="line shadow" d={line(data2)} strokeLinecap="round" fill="none" stroke={this.props.colors[1]} strokeWidth="2"/>
 

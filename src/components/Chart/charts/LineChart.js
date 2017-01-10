@@ -78,8 +78,7 @@ class LineChart extends Component{
           .range([h, 0]);
 
       let yAxis = d3.axisLeft(y)//.ticks(5);
-
-      //let xAxis = d3.axisBottom(x).ticks(1);
+      let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat(""));
       /*
       .tickValues(
         data.map(function(d,i){
@@ -116,6 +115,7 @@ class LineChart extends Component{
                     <Grid h={h} grid={yGrid} gridType="y"/>
 
                     <Axis h={h} axis={yAxis} axisType="y" />
+                    <Axis h={h} axis={xAxis} axisType="x" />
 
                     <path className="line shadow" d={line(data)} strokeLinecap="round" fill="none" stroke={this.props.color} strokeWidth="3" />
                     <Dots data={data} x={x} y={y} color={this.props.color} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} xOffset={x.bandwidth()/2}/>

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "../../styles/ChartsWrapper.css"
 import ChartWrapper from "./ChartWrapper";
 import LineChart from "./charts/LineChart";
-import BarChart from "./charts/BarChart";
+//import BarChart from "./charts/BarChart";
 import StackedBarChart from "./charts/StackedBarChart";
 import GroupedBarChart from "./charts/GroupedBarChart";
 import GroupedLineChart from "./charts/GroupedLineChart";
@@ -35,6 +35,16 @@ class ChartsWrapper extends Component {
 
   componentWillUnmount(){
     window.removeEventListener("resize", this.updateSize);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      memoryChecked: true,
+      cpuChecked: true,
+      network_throughputChecked: true,
+      network_packetChecked: true,
+      errorsChecked: true
+    });
   }
 
   updateSize(){
@@ -89,93 +99,100 @@ class ChartsWrapper extends Component {
     let errorsSystem = [];
     let errorsSensor = [];
     let errorsComponent = [];
-    data.forEach((element)=> {
-        memory_usage.push({time: element.timestamp, value: element.memory_usage});
-        memory_available.push({time: element.timestamp, value: element.memory_available});
-        cpu_usage.push({time: element.timestamp, value: element.cpu_usage});
-        network_throughputIn.push({time: element.timestamp, value: element.network_throughput.in});
-        network_throughputOut.push({time: element.timestamp, value: element.network_throughput.out});
-        network_packetIn.push({time: element.timestamp, value: element.network_packet.in});
-        network_packetOut.push({time: element.timestamp, value: element.network_packet.out});
-        errorsSystem.push({time: element.timestamp, value: element.errors.system});
-        errorsSensor.push({time: element.timestamp, value: element.errors.sensor});
-        errorsComponent.push({time: element.timestamp, value: element.errors.component});
-    });
+    if(data){
+      data.forEach((element)=> {
+          memory_usage.push({time: element.timestamp, value: element.memory_usage});
+          memory_available.push({time: element.timestamp, value: element.memory_available});
+          cpu_usage.push({time: element.timestamp, value: element.cpu_usage});
+          network_throughputIn.push({time: element.timestamp, value: element.network_throughput.in});
+          network_throughputOut.push({time: element.timestamp, value: element.network_throughput.out});
+          network_packetIn.push({time: element.timestamp, value: element.network_packet.in});
+          network_packetOut.push({time: element.timestamp, value: element.network_packet.out});
+          errorsSystem.push({time: element.timestamp, value: element.errors.system});
+          errorsSensor.push({time: element.timestamp, value: element.errors.sensor});
+          errorsComponent.push({time: element.timestamp, value: element.errors.component});
+      });
+    }
+
 
     return (
-      <div className="ChartsWrapper">
-        <section className="noFlex">
-          <h3>INFO</h3>
-          <div>
-            <p><strong>SERVER ID:</strong> {header.target_name}</p>
-            <p><strong>FROM:</strong> {Date(header.time_range.start)}</p>
-            <p><strong>TO:</strong> {Date(header.time_range.end)}</p>
-            <p><strong>RECORD COUNT:</strong> {header.recordCount}</p>
-          </div>
-        </section>
+      <div>
+        {(data)?(
+          <div className="ChartsWrapper">
+            <section className="noFlex">
+              <h3>INFO</h3>
+              <div>
+                <p><strong>SERVER ID:</strong> {header.target_name}</p>
+                <p><strong>FROM:</strong> {Date(header.time_range.start)}</p>
+                <p><strong>TO:</strong> {Date(header.time_range.end)}</p>
+                <p><strong>RECORD COUNT:</strong> {header.recordCount}</p>
+              </div>
+            </section>
 
-        <section className="noFlex">
-          <h3>FILTER</h3>
-          <div>
-            <label>
-              <input type="checkbox" value="memory" checked={this.state.memoryChecked} onChange={this.onCheck} />
-                MEMORY
-            </label>
-            <label>
-              <input type="checkbox" value="cpu" checked={this.state.cpuChecked} onChange={this.onCheck} />
-                CPU
-            </label>
-            <label>
-              <input type="checkbox" value="network_throughput" checked={this.state.network_throughputChecked} onChange={this.onCheck} />
-                NETWORK THROUGHTPUT
-            </label>
-            <label>
-              <input type="checkbox" value="network_packet" checked={this.state.network_packetChecked} onChange={this.onCheck} />
-                NETWORK PACKET
-            </label>
-            <label>
-              <input type="checkbox" value="errors" checked={this.state.errorsChecked} onChange={this.onCheck} />
-                ERRORS
-            </label>
-          </div>
-        </section>
+            <section className="noFlex">
+              <h3>FILTER</h3>
+              <div>
+                <label>
+                  <input type="checkbox" value="memory" checked={this.state.memoryChecked} onChange={this.onCheck} />
+                    MEMORY
+                </label>
+                <label>
+                  <input type="checkbox" value="cpu" checked={this.state.cpuChecked} onChange={this.onCheck} />
+                    CPU
+                </label>
+                <label>
+                  <input type="checkbox" value="network_throughput" checked={this.state.network_throughputChecked} onChange={this.onCheck} />
+                    NETWORK THROUGHTPUT
+                </label>
+                <label>
+                  <input type="checkbox" value="network_packet" checked={this.state.network_packetChecked} onChange={this.onCheck} />
+                    NETWORK PACKET
+                </label>
+                <label>
+                  <input type="checkbox" value="errors" checked={this.state.errorsChecked} onChange={this.onCheck} />
+                    ERRORS
+                </label>
+              </div>
+            </section>
 
-        {this.state.memoryChecked ? (
-          <ChartWrapper title={"memory usage"} color={"#C62326"} data={memory_usage}  svgWidth={this.state.svgWidth}>
-            <LineChart />
-          </ChartWrapper>
-        ) : (
-          ""
-        )}
-        {this.state.cpuChecked ? (
-          <ChartWrapper title={"cpu usage"} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth}>
-            <BarChart />
-          </ChartWrapper>
-        ) : (
-          ""
-        )}
-        {this.state.network_throughputChecked ? (
-          <ChartWrapper title={"network throughput"} legend={["in","out"]} colors={["salmon","navy"]} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth}>
-            <GroupedBarChart />
-          </ChartWrapper>
-        ) : (
-          ""
-        )}
-        {this.state.network_packetChecked ? (
-          <ChartWrapper title={"network packet"} legend={["in","out"]} colors={["orange","purple"]} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth}>
-            <GroupedLineChart />
-          </ChartWrapper>
-        ) : (
-          ""
-        )}
-        {this.state.errorsChecked ? (
-          <ChartWrapper title={"errors"} legend={["system","sensor", "component"]} colors={["#5D4EA8","#3187C2", "#67C2A3"]} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} >
-            <StackedBarChart />
-          </ChartWrapper>
-        ) : (
-          ""
-        )}
-      </div>
+            {this.state.memoryChecked ? (
+              <ChartWrapper title={"memory"} legend={["usage","available"]} colors={["#7B4A12","#E49135"]} datas={[memory_usage,memory_available]} svgWidth={this.state.svgWidth} >
+                <StackedBarChart />
+              </ChartWrapper>
+            ) : (
+              ""
+            )}
+            {this.state.cpuChecked ? (
+              <ChartWrapper title={"cpu usage"} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth}>
+                <LineChart />
+              </ChartWrapper>
+            ) : (
+              ""
+            )}
+            {this.state.network_throughputChecked ? (
+              <ChartWrapper title={"network throughput"} legend={["in","out"]} colors={["salmon","navy"]} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth}>
+                <GroupedBarChart />
+              </ChartWrapper>
+            ) : (
+              ""
+            )}
+            {this.state.network_packetChecked ? (
+              <ChartWrapper title={"network packet"} legend={["in","out"]} colors={["orange","purple"]} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth}>
+                <GroupedLineChart />
+              </ChartWrapper>
+            ) : (
+              ""
+            )}
+            {this.state.errorsChecked ? (
+              <ChartWrapper title={"errors"} legend={["system","sensor", "component"]} colors={["#5D4EA8","#3187C2", "#67C2A3"]} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} >
+                <StackedBarChart />
+              </ChartWrapper>
+            ) : (
+              ""
+            )}
+          </div>
+      ):(<div>no data</div>)}
+    </div>
     );
   }
 }

@@ -86,7 +86,8 @@ class GroupedBarChart extends Component{
         .domain([0, Max])
         .range([h, 0]);
 
-    let yAxis = d3.axisLeft(y)//.ticks(5);
+    let yAxis = d3.axisLeft(y);
+    let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat(""));
 
     let yGrid = d3.axisLeft(y).ticks()
         .tickSize(-w, 0, 0)
@@ -100,7 +101,7 @@ class GroupedBarChart extends Component{
           <g transform={transform}>
             <Grid h={h} grid={yGrid} gridType="y"/>
             <Axis h={h} axis={yAxis} axisType="y" />
-
+            <Axis h={h} axis={xAxis} axisType="x" />
             <GroupedBars h={h} datas={[data1,data2]} x={x} y={y} colors={this.props.colors}/>
           </g>
         </svg>

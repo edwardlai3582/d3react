@@ -88,6 +88,7 @@ class StackedBarChart extends Component{
         .range([h, 0]);
 
     let yAxis = d3.axisLeft(y)//.ticks(5);
+    let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat(""));
 
     let yGrid = d3.axisLeft(y).ticks()
         .tickSize(-w, 0, 0)
@@ -101,7 +102,7 @@ class StackedBarChart extends Component{
           <g transform={transform}>
             <Grid h={h} grid={yGrid} gridType="y"/>
             <Axis h={h} axis={yAxis} axisType="y" />
-
+            <Axis h={h} axis={xAxis} axisType="x" />
             <StackedBars h={h} colors={this.props.colors} data={data1} datas={popo}  x={x} y={y} />
           </g>
         </svg>

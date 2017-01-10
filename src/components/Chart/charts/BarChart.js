@@ -85,7 +85,7 @@ class BarChart extends Component{
 
     let yAxis = d3.axisLeft(y)//.ticks(5);
 
-    //let xAxis = d3.axisBottom(x).ticks(1);
+    let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat(""));
 
     let yGrid = d3.axisLeft(y).ticks()
         .tickSize(-w, 0, 0)
@@ -99,7 +99,7 @@ class BarChart extends Component{
           <g transform={transform}>
             <Grid h={h} grid={yGrid} gridType="y"/>
             <Axis h={h} axis={yAxis} axisType="y" />
-
+            <Axis h={h} axis={xAxis} axisType="x" />
             <Bars h={h} data={data} x={x} y={y} color={this.props.color} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} />
             <ToolTip tooltip={this.state.tooltip}/>
           </g>
