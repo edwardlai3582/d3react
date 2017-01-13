@@ -151,7 +151,7 @@ class ChartsWrapper extends Component {
               ""
             )}
             {this.state.cpuChecked ? (
-              <CpuChart title={"cpu usage"} xLabel={"time"} yLabel={""} color={"teal"} data={cpu_usage} svgWidth={this.state.svgWidth} />
+              <CpuChart title={"cpu usage"} xLabel={"time"} yLabel={""} colors={["teal"]} datas={[cpu_usage]} svgWidth={this.state.svgWidth} />
             ) : (
               ""
             )}

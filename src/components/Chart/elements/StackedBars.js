@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class StackedBars extends Component{
-
   render(){
     let StackedBars = [];
     let h = []
@@ -16,11 +15,7 @@ class StackedBars extends Component{
             x={this.props.x(d.date)+this.props.x.bandwidth()*0.1}
             y={this.props.y(d.value)-(h[index])}
             fill={this.props.colors[i]}
-            onMouseOver={this.props.showToolTip}
-            onMouseOut={this.props.hideToolTip}
             key={index}
-            data-key={d.time}
-            data-value={d.value}
           />
         );
       }));

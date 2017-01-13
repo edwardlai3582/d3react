@@ -8,12 +8,10 @@ class Dots extends Component{
         <circle
           className="dot"
           r="4"
-          cx={this.props.x(d.date)+this.props.xOffset}
+          cx={this.props.x(d.date)+this.props.x.bandwidth()/2}
           cy={this.props.y(d.value)}
           fill={this.props.color}
           key={i}
-          onMouseOver={this.props.showToolTip} onMouseOut={this.props.hideToolTip}
-          data-key={d.time} data-value={d.value}
         />
       );
     });

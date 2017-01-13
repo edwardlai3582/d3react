@@ -11,11 +11,7 @@ class Bars extends Component{
           x={this.props.x(d.date)+this.props.x.bandwidth()*0.1}
           y={this.props.y(d.value)}
           fill={this.props.color}
-          onMouseOver={this.props.showToolTip}
-          onMouseOut={this.props.hideToolTip}
           key={i}
-          data-key={d.time}
-          data-value={d.value}
         />
       );
     });

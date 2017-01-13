@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class ToolTip extends Component{
-
   render(){
       let visibility="hidden";
       let transform="";
