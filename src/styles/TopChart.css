@@ -9,13 +9,17 @@
 
 #getFormWrapper {
   width: 100%;
-  background-color: white;
+  background-color: #01BCB5;
   font-size: 18px;
   margin-bottom: 20px;
+  color: white;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 5px;
 }
 
 #getFormWrapper h3{
-  background-color: black;
+  background-color: #01BCB5;
   margin: 0;
   color: white;
   padding: 5px 10px;
@@ -36,11 +40,16 @@ input[type=text], input[type=datetime-local] {
 }
 
 input[type=submit] {
-  background-color: white;
+  background-color: #01BCB5;
   border-width: 2px;
   border-style: solid;
-  border-color: black;
+  border-color: white;
   cursor: pointer;
+  color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin: 10px 0px 0px 10px;
 }
 
 #formWarning {

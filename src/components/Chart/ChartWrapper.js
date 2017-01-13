@@ -1,13 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../../styles/ChartWrapper.css'
 
-class ChartWrapper extends React.Component {
+const ChartWrapper = (Chart)=> class extends Component {
   render() {
-    const childrenWithProps = React.Children.map(this.props.children,
-     (child) => React.cloneElement(child, {...this.props})
-    );
-
-
     let legend = (this.props.legend)? this.props.legend.map((legend, index)=>{
       return (
         <div key={legend} className="legend">
@@ -21,7 +16,7 @@ class ChartWrapper extends React.Component {
       <section className="ChartWrapper" >
         <h3>{this.props.title}</h3>
         <div className="svgWrapper">
-          {childrenWithProps}
+          <Chart {...this.props}/>
         </div>
         <div className="legends">
           {legend}

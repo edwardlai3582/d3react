@@ -73,7 +73,7 @@ class StackedBarChart extends Component{
             <StackedBars h={h} colors={this.props.colors} data={data1} datas={totalDatas}  x={x} y={y} />
           </g>
           {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}
-          {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2}>{this.props.yLabel}</text></g>}
+          {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2} >{this.props.yLabel}</text></g>}
         </svg>
       </div>
     );
