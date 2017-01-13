@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import React, { Component } from 'react';
 import { chartMargin } from './consts';
-import GridNAxis from '../elements/GridNAxis';
+import GridNAxis from './elements/GridNAxis';
 
 class PlainChart extends Component{
   render(){

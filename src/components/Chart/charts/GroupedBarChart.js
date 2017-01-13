@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GroupedBars from '../elements/GroupedBars';
+import GroupedBars from './elements/GroupedBars';
 import PlainChart from './PlainChart';
 
 class GroupedBarChart extends Component{

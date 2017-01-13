@@ -171,8 +171,8 @@ class ChartsWrapper extends Component {
               ""
             )}
           </div>
-      ):(<div>no data</div>)}
-    </div>
+        ):(<div>no data</div>)}
+      </div>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Lines from '../elements/Lines';
-import GroupedDots from '../elements/GroupedDots';
+import Lines from './elements/Lines';
+import GroupedDots from './elements/GroupedDots';
 import PlainChart from './PlainChart';
 
 class LineChart extends Component{

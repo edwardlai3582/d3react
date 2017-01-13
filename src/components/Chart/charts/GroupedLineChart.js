@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Lines from '../elements/Lines';
+import Lines from './elements/Lines';
 import PlainChart from './PlainChart';
 
 class GroupedLineChart extends Component{

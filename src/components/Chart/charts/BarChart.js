@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Bars from '../elements/Bars';
+import Bars from './elements/Bars';
 import PlainChart from './PlainChart';
 
 class BarChart extends Component{

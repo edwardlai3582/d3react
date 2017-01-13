@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StackedBars from '../elements/StackedBars';
+import StackedBars from './elements/StackedBars';
 import PlainChart from './PlainChart';
 
 class StackedBarChart extends Component{
