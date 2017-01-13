@@ -4,7 +4,6 @@ import mockResponse from '../../mockResponse';
 import '../../styles/TopChart.css';
 import ChartsWrapper from './ChartsWrapper';
 
-
 class TopChart extends Component {
   constructor() {
     super();

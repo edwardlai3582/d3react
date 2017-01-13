@@ -18,7 +18,7 @@ class LineChart extends Component{
     }
 
     return (
-        <PlainChart YMax={YMax} {...this.props} >
+        <PlainChart YMax={YMax} xAxis={true} yAxis={true} xGrid={false} yGrid={true} {...this.props} >
           <Lines />
           <GroupedDots />
         </PlainChart>

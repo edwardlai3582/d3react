@@ -39,7 +39,7 @@ class PlainChart extends Component{
       <div className="svgWrapper">
         <svg width={svgWidth} height={svgHeight} >
           <g transform={transform}>
-            <GridNAxis x={x} y={y} w={w} h={h} xAxis={true} yAxis={true} xGrid={false} yGrid={true} />
+            <GridNAxis x={x} y={y} w={w} h={h} xAxis={this.props.xAxis} yAxis={this.props.yAxis} xGrid={this.props.xGrid} yGrid={this.props.yGrid} />
 
             {childrenWithProps}
           </g>
