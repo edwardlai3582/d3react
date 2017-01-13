@@ -54,15 +54,12 @@ class TopChart extends Component {
     }
   }
 
-  handleChange(event) {
-    if(event.target.id === 'id'){
-        this.setState({id: event.target.value});
+  handleChange(e) {
+    if(e.target.id === 'id'){
+        this.setState({id: e.target.value});
     }
-    if(event.target.id === 'from'){
-        this.setState({from: event.target.value+'Z'});
-    }
-    if(event.target.id === 'to'){
-        this.setState({to: event.target.value+'Z'});
+    if(e.target.id === 'from' || e.target.id === 'to'){
+        this.setState({ [e.target.id]: e.target.value+'Z'});
     }
 
     this.setState({formWarning: ""});

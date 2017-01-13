@@ -1,9 +1,10 @@
 import * as d3 from "d3";
 import React, { Component } from 'react';
 
-import GridNAxis from '../elements/GridNAxis';
 
-class GroupedLineChart extends Component{
+import PlainChart from './PlainChart';
+
+class test extends Component{
   constructor() {
     super();
     this.state = {
@@ -15,8 +16,8 @@ class GroupedLineChart extends Component{
   }
 
   render(){
-    let svgWidth = this.props.svgWidth;
-    let svgHeight = this.props.svgWidth*0.5;
+
+
     let margin = {top: 10, right: 30, bottom: 25, left: 80};
     let w = svgWidth - (margin.left + margin.right);
     let h = svgHeight - (margin.top + margin.bottom);
@@ -53,21 +54,13 @@ class GroupedLineChart extends Component{
         return <path key={index} d={line(data)} strokeLinecap="round" fill="none" stroke={this.props.colors[index]} strokeWidth="2"/>
       });
 
-    let transform='translate(' + margin.left + ',' + margin.top + ')';
 
     return (
-        <div className="svgWrapper">
-          <svg width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
-            <g transform={transform}>
-              <GridNAxis x={x} y={y} w={w} h={h} xAxis={true} yAxis={true} xGrid={true} yGrid={true} />
+        <PlainChart YMax={YMax} svgWidth={this.props.svgWidth} svgHeight={this.props.svgHeight} datas={datas} >
               {lines}
-            </g>
-            {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}
-            {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2}>{this.props.yLabel}</text></g>}
-          </svg>
-        </div>
+        </PlainChart>
     );
   }
 }
 
-export default GroupedLineChart;
+export default test;

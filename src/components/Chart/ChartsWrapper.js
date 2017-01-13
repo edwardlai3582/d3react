@@ -5,7 +5,6 @@ import LineChart from "./charts/LineChart";
 import StackedBarChart from "./charts/StackedBarChart";
 import GroupedBarChart from "./charts/GroupedBarChart";
 import GroupedLineChart from "./charts/GroupedLineChart";
-
 import ChartWrapper from "./ChartWrapper";
 
 class ChartsWrapper extends Component {
@@ -50,7 +49,7 @@ class ChartsWrapper extends Component {
       let node = ReactDOM.findDOMNode(this);
       let width = node.getBoundingClientRect().width;
       let svgWidth = 0;
-      //console.log(width);
+
       if(width <= 575) {
         svgWidth = width;
       }
@@ -64,23 +63,7 @@ class ChartsWrapper extends Component {
   }
 
   onCheck(e) {
-    let checkedValue = e.target.value;
-
-    if(checkedValue === "memory"){
-      this.setState({memoryChecked: !this.state.memoryChecked});
-    }
-    else if(checkedValue === "cpu"){
-      this.setState({cpuChecked: !this.state.cpuChecked});
-    }
-    else if(checkedValue === "network_throughput"){
-      this.setState({network_throughputChecked: !this.state.network_throughputChecked});
-    }
-    else if(checkedValue === "network_packet"){
-      this.setState({network_packetChecked: !this.state.network_packetChecked});
-    }
-    else if(checkedValue === "errors"){
-      this.setState({errorsChecked: !this.state.errorsChecked});
-    }
+    this.setState({ [e.target.value]: e.target.checked });
   }
 
   render() {
@@ -140,23 +123,23 @@ class ChartsWrapper extends Component {
               <h3>FILTER</h3>
               <div>
                 <label>
-                  <input type="checkbox" value="memory" checked={this.state.memoryChecked} onChange={this.onCheck} />
+                  <input type="checkbox" value="memoryChecked" checked={this.state.memoryChecked} onChange={this.onCheck} />
                     MEMORY
                 </label>
                 <label>
-                  <input type="checkbox" value="cpu" checked={this.state.cpuChecked} onChange={this.onCheck} />
+                  <input type="checkbox" value="cpuChecked" checked={this.state.cpuChecked} onChange={this.onCheck} />
                     CPU
                 </label>
                 <label>
-                  <input type="checkbox" value="network_throughput" checked={this.state.network_throughputChecked} onChange={this.onCheck} />
+                  <input type="checkbox" value="network_throughputChecked" checked={this.state.network_throughputChecked} onChange={this.onCheck} />
                     NETWORK THROUGHTPUT
                 </label>
                 <label>
-                  <input type="checkbox" value="network_packet" checked={this.state.network_packetChecked} onChange={this.onCheck} />
+                  <input type="checkbox" value="network_packetChecked" checked={this.state.network_packetChecked} onChange={this.onCheck} />
                     NETWORK PACKET
                 </label>
                 <label>
-                  <input type="checkbox" value="errors" checked={this.state.errorsChecked} onChange={this.onCheck} />
+                  <input type="checkbox" value="errorsChecked" checked={this.state.errorsChecked} onChange={this.onCheck} />
                     ERRORS
                 </label>
               </div>

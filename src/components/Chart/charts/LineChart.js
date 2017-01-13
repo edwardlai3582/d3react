@@ -2,8 +2,7 @@ import * as d3 from "d3";
 import React, { Component } from 'react';
 
 import Dots from '../elements/Dots';
-import Axis from '../elements/Axis';
-import Grid from '../elements/Grid';
+import GridNAxis from '../elements/GridNAxis';
 //import ToolTip from '../elements/ToolTip';
 
 class LineChart extends Component{
@@ -48,11 +47,12 @@ class LineChart extends Component{
 
   render(){
     let data=this.props.data;
+
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
-    let margin = {top: 10, right: 30, bottom: 25, left: 80},
-        w = svgWidth - (margin.left + margin.right),
-        h = svgHeight - (margin.top + margin.bottom);
+    let margin = {top: 10, right: 30, bottom: 25, left: 80};
+    let w = svgWidth - (margin.left + margin.right);
+    let h = svgHeight - (margin.top + margin.bottom);
 
     data.forEach((d)=> {
         d.date = d3.isoParse(d.time);
@@ -66,13 +66,6 @@ class LineChart extends Component{
       .domain([0,d3.max(data,(d)=>(d.value))])
       .range([h, 0]);
 
-    let yAxis = d3.axisLeft(y);
-    let xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat(""));
-
-    let yGrid = d3.axisLeft(y).ticks()
-        .tickSize(-w, 0, 0)
-        .tickFormat("");
-
     let line = d3.line()
         .x((d) => ( x(d.date) + x.bandwidth()/2))
         .y((d) => ( y(d.value)));
@@ -82,10 +75,9 @@ class LineChart extends Component{
     return (
       <svg width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet" >
         <g transform={transform}>
-          <Grid h={h} grid={yGrid} gridType="y"/>
-          <Axis h={h} axis={yAxis} axisType="y" />
-          <Axis h={h} axis={xAxis} axisType="x" />
-          <path className="line shadow" d={line(data)} strokeLinecap="round" fill="none" stroke={this.props.color} strokeWidth="3" />
+          <GridNAxis x={x} y={y} w={w} h={h} xAxis={true} yAxis={true} xGrid={false} yGrid={true} />
+
+          <path d={line(data)} strokeLinecap="round" fill="none" stroke={this.props.color} strokeWidth="3" />
           <Dots data={data} x={x} y={y} color={this.props.color} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} xOffset={x.bandwidth()/2}/>
         </g>
         {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}

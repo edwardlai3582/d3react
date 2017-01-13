@@ -5,7 +5,7 @@ class GroupedBars extends Component{
   render(){
     let rects=[];
     this.props.datas.forEach((data, index, array)=>{
-      let temprects=data.map((d,i)=>{
+      rects.push(data.map((d,i)=>{
         return (
           <rect
             width={this.props.x.bandwidth()*0.6/array.length}
@@ -20,8 +20,7 @@ class GroupedBars extends Component{
             data-value={d.value}
           />
         );
-      });
-      rects.push(temprects);
+      }));
     });
 
     return(
