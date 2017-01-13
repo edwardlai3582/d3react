@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import React, { Component } from 'react';
-
+import * as chartMargin from './chartMargin';
 import GridNAxis from '../elements/GridNAxis';
 import Bars from '../elements/Bars';
 
@@ -19,9 +19,8 @@ class BarChart extends Component{
     let data=this.props.data;
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
-    let margin = {top: 10, right: 30, bottom: 25, left: 80};
-    let w = svgWidth - (margin.left + margin.right);
-    let h = svgHeight - (margin.top + margin.bottom);
+    let w = svgWidth - (chartMargin.LEFT + chartMargin.RIGHT);
+    let h = svgHeight - (chartMargin.TOP + chartMargin.BOTTOM);
 
     data.forEach((d) => {
         d.date = d3.isoParse(d.time);
@@ -35,18 +34,18 @@ class BarChart extends Component{
         .domain([0,d3.max(data, (d) => ( d.value ))])
         .range([h, 0]);
 
-    let transform='translate(' + margin.left + ',' + margin.top + ')';
+    let transform='translate(' + chartMargin.LEFT + ',' + chartMargin.TOP + ')';
 
     return (
       <div className="svgWrapper">
-        <svg width={svgWidth} height={svgHeight} preserveAspectRatio="xMinYMin meet">
+        <svg width={svgWidth} height={svgHeight} >
           <g transform={transform}>
             <GridNAxis x={x} y={y} w={w} h={h} xAxis={true} yAxis={true} xGrid={false} yGrid={true} />
 
             <Bars h={h} data={data} x={x} y={y} color={this.props.color} showToolTip={this.showToolTip} hideToolTip={this.hideToolTip} />
           </g>
-          {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}
-          {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2}>{this.props.yLabel}</text></g>}
+          {(this.props.xLabel==="")?"":<g><text x={svgWidth - chartMargin.RIGHT} y={svgHeight} textAnchor="end" >{this.props.xLabel}</text></g>}
+          {(this.props.yLabel==="")?"":<g><text x={chartMargin.LEFT - 5} y={chartMargin.TOP - 10} textAnchor="end" >{this.props.yLabel}</text></g>}
         </svg>
       </div>
     );

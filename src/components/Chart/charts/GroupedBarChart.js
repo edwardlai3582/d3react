@@ -1,27 +1,16 @@
 import * as d3 from "d3";
 import React, { Component } from 'react';
-
+import * as chartMargin from './chartMargin';
 import GridNAxis from '../elements/GridNAxis';
 import GroupedBars from '../elements/GroupedBars';
 
 class GroupedBarChart extends Component{
-  constructor() {
-    super();
-    this.state = {
-      tooltip:{
-        display:false,
-        data1:{key:'',value:''},
-        data2:{key:'',value:''}
-      }
-    };
-  }
 
   render(){
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
-    let margin = {top: 10, right: 30, bottom: 25, left: 80};
-    let w = svgWidth - (margin.left + margin.right);
-    let h = svgHeight - (margin.top + margin.bottom);
+    let w = svgWidth - (chartMargin.LEFT + chartMargin.RIGHT);
+    let h = svgHeight - (chartMargin.TOP + chartMargin.BOTTOM);
 
     let datas=this.props.datas;
     datas.forEach((data)=>{
@@ -34,6 +23,7 @@ class GroupedBarChart extends Component{
       .range([0, w])
       .domain(datas[0].map((d) => d.date ));
 
+    //get maximum
     let YMax= datas.reduce((accumulator, currentValue)=>{
       let submax = currentValue.reduce((accumulator, currentValue)=>{
           if(currentValue.value > accumulator) accumulator= currentValue.value;
@@ -47,7 +37,7 @@ class GroupedBarChart extends Component{
       .domain([0, YMax])
       .range([h, 0]);
 
-    let transform='translate(' + margin.left + ',' + margin.top + ')';
+    let transform='translate(' + chartMargin.LEFT + ',' + chartMargin.TOP + ')';
 
     return (
       <div className="svgWrapper">
@@ -57,8 +47,8 @@ class GroupedBarChart extends Component{
 
             <GroupedBars h={h} datas={datas} x={x} y={y} colors={this.props.colors}/>
           </g>
-          {(this.props.xLabel==="")?"":<g><text x={svgWidth/2} y={svgHeight}>{this.props.xLabel}</text></g>}
-          {(this.props.yLabel==="")?"":<g><text x={15} y={svgHeight/2}>{this.props.yLabel}</text></g>}
+          {(this.props.xLabel==="")?"":<g><text x={svgWidth - chartMargin.RIGHT} y={svgHeight} textAnchor="end" >{this.props.xLabel}</text></g>}
+          {(this.props.yLabel==="")?"":<g><text x={chartMargin.LEFT - 5} y={chartMargin.TOP - 10} textAnchor="end" >{this.props.yLabel}</text></g>}
         </svg>
       </div>
     );
