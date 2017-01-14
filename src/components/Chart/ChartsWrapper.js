@@ -67,8 +67,10 @@ class ChartsWrapper extends Component {
   }
 
   render() {
+    let status = this.props.status;
     let header = this.props.response.header;
     let data = this.props.response.data;
+    let thingToRender;
 
     //create chart with HOC ChartWrapper
     let MemoryChart = ChartWrapper(StackedBarChart);
@@ -89,7 +91,13 @@ class ChartsWrapper extends Component {
     let errorsSensor = [];
     let errorsComponent = [];
 
-    if(data){
+    if(status === 'initial') {
+      thingToRender = " "
+    }
+    else if(status === 'loading') {
+      thingToRender = "loading..."
+    }
+    else if(status === 'success') {
       data.forEach((element)=> {
           memory_usage.push({time: element.timestamp, value: element.memory_usage});
           memory_available.push({time: element.timestamp, value: element.memory_available});
@@ -102,76 +110,83 @@ class ChartsWrapper extends Component {
           errorsSensor.push({time: element.timestamp, value: element.errors.sensor});
           errorsComponent.push({time: element.timestamp, value: element.errors.component});
       });
-    }
 
+      thingToRender = (
+        <div className="ChartsWrapper">
+          <section className="noFlex">
+            <h3>INFO</h3>
+            <div>
+              <p><strong>SERVER ID:</strong> {header.target_name}</p>
+              <p><strong>FROM:</strong> {new Date(header.time_range.start).toUTCString()}</p>
+              <p><strong>TO:</strong> {new Date(header.time_range.end).toUTCString()}</p>
+              <p><strong>RECORD COUNT:</strong> {header.recordCount}</p>
+            </div>
+          </section>
+
+          <section className="noFlex">
+            <h3>FILTER</h3>
+            <div>
+              <label>
+                <input type="checkbox" value="memoryChecked" checked={this.state.memoryChecked} onChange={this.onCheck} />
+                  MEMORY
+              </label>
+              <label>
+                <input type="checkbox" value="cpuChecked" checked={this.state.cpuChecked} onChange={this.onCheck} />
+                  CPU
+              </label>
+              <label>
+                <input type="checkbox" value="network_throughputChecked" checked={this.state.network_throughputChecked} onChange={this.onCheck} />
+                  NETWORK THROUGHTPUT
+              </label>
+              <label>
+                <input type="checkbox" value="network_packetChecked" checked={this.state.network_packetChecked} onChange={this.onCheck} />
+                  NETWORK PACKET
+              </label>
+              <label>
+                <input type="checkbox" value="errorsChecked" checked={this.state.errorsChecked} onChange={this.onCheck} />
+                  ERRORS
+              </label>
+            </div>
+          </section>
+
+          {this.state.memoryChecked ? (
+            <MemoryChart title={"memory"} xLabel={"time"} yLabel={"KB"} legend={["usage","available"]} colors={["#7B4A12","#E49135"]} datas={[memory_usage,memory_available]} svgWidth={this.state.svgWidth}/>
+          ) : (
+            ""
+          )}
+          {this.state.cpuChecked ? (
+            <CpuChart title={"cpu usage"} xLabel={"time"} yLabel={""} colors={["teal"]} datas={[cpu_usage]} svgWidth={this.state.svgWidth} />
+          ) : (
+            ""
+          )}
+          {this.state.network_throughputChecked ? (
+            <NetworkThroughputChart  title={"network throughput"} xLabel={"time"} yLabel={"KB"} legend={["in","out"]} colors={["salmon","navy"]} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth} />
+          ) : (
+            ""
+          )}
+          {this.state.network_packetChecked ? (
+            <NetworkPacketChart title={"network packet"} xLabel={"time"} yLabel={""} legend={["in","out"]} colors={["orange","purple"]} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth} />
+          ) : (
+            ""
+          )}
+          {this.state.errorsChecked ? (
+            <ErrorsChart title={"errors"} xLabel={"time"} yLabel={""} legend={["system","sensor", "component"]} colors={["#5D4EA8","#3187C2", "#67C2A3"]} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} />
+          ) : (
+            ""
+          )}
+        </div>
+      );
+    }
+    else if(status === 'fail') {
+      thingToRender = "can't get the data"
+    }
+    else {
+      thingToRender = " "
+    }
 
     return (
       <div>
-        {(data)?(
-          <div className="ChartsWrapper">
-            <section className="noFlex">
-              <h3>INFO</h3>
-              <div>
-                <p><strong>SERVER ID:</strong> {header.target_name}</p>
-                <p><strong>FROM:</strong> {new Date(header.time_range.start).toString()}</p>
-                <p><strong>TO:</strong> {new Date(header.time_range.end).toString()}</p>
-                <p><strong>RECORD COUNT:</strong> {header.recordCount}</p>
-              </div>
-            </section>
-
-            <section className="noFlex">
-              <h3>FILTER</h3>
-              <div>
-                <label>
-                  <input type="checkbox" value="memoryChecked" checked={this.state.memoryChecked} onChange={this.onCheck} />
-                    MEMORY
-                </label>
-                <label>
-                  <input type="checkbox" value="cpuChecked" checked={this.state.cpuChecked} onChange={this.onCheck} />
-                    CPU
-                </label>
-                <label>
-                  <input type="checkbox" value="network_throughputChecked" checked={this.state.network_throughputChecked} onChange={this.onCheck} />
-                    NETWORK THROUGHTPUT
-                </label>
-                <label>
-                  <input type="checkbox" value="network_packetChecked" checked={this.state.network_packetChecked} onChange={this.onCheck} />
-                    NETWORK PACKET
-                </label>
-                <label>
-                  <input type="checkbox" value="errorsChecked" checked={this.state.errorsChecked} onChange={this.onCheck} />
-                    ERRORS
-                </label>
-              </div>
-            </section>
-
-            {this.state.memoryChecked ? (
-              <MemoryChart title={"memory"} xLabel={"time"} yLabel={"KB"} legend={["usage","available"]} colors={["#7B4A12","#E49135"]} datas={[memory_usage,memory_available]} svgWidth={this.state.svgWidth}/>
-            ) : (
-              ""
-            )}
-            {this.state.cpuChecked ? (
-              <CpuChart title={"cpu usage"} xLabel={"time"} yLabel={""} colors={["teal"]} datas={[cpu_usage]} svgWidth={this.state.svgWidth} />
-            ) : (
-              ""
-            )}
-            {this.state.network_throughputChecked ? (
-              <NetworkThroughputChart  title={"network throughput"} xLabel={"time"} yLabel={"KB"} legend={["in","out"]} colors={["salmon","navy"]} datas={[network_throughputIn,network_throughputOut]} svgWidth={this.state.svgWidth} />
-            ) : (
-              ""
-            )}
-            {this.state.network_packetChecked ? (
-              <NetworkPacketChart title={"network packet"} xLabel={"time"} yLabel={""} legend={["in","out"]} colors={["orange","purple"]} datas={[network_packetIn,network_packetOut]}  svgWidth={this.state.svgWidth} />
-            ) : (
-              ""
-            )}
-            {this.state.errorsChecked ? (
-              <ErrorsChart title={"errors"} xLabel={"time"} yLabel={""} legend={["system","sensor", "component"]} colors={["#5D4EA8","#3187C2", "#67C2A3"]} datas={[errorsSystem,errorsSensor,errorsComponent]} svgWidth={this.state.svgWidth} />
-            ) : (
-              ""
-            )}
-          </div>
-        ):(<div>no data</div>)}
+        {thingToRender}
       </div>
     );
   }

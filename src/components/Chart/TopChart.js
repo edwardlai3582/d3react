@@ -12,7 +12,7 @@ class TopChart extends Component {
       from : "2016-12-10T00:56:11.000Z",
       to: "2017-01-05T00:56:11.000Z",
       formWarning: "",
-      getting: false,
+      status: 'initial', //initial loading success fail
       response: {}
     };
     this.handleChange = this.handleChange.bind(this);
@@ -26,14 +26,14 @@ class TopChart extends Component {
   mockGet(id, from, to) {
     fetchMock.get(/server_stat\/.*?.*/i, mockResponse.get);
 
-    this.setState({getting: true});
+    this.setState({status: 'loading'});
     return fetch(`/server_stat/${id}?from=${from}&to=${to}`)
       .then((response) => {
         return response.json()
       })
       .then((data)=>{
         console.log(data)
-        this.setState({response: data, getting: false});
+        this.setState({response: data, status: 'success'});
       })
   }
 
@@ -87,8 +87,7 @@ class TopChart extends Component {
           <div id="formWarning">{this.state.formWarning}</div>
         </section>
         <section>
-          {this.state.getting? 'LOADING...' : ''}
-          <ChartsWrapper response={this.state.response} />
+          <ChartsWrapper status={this.state.status} response={this.state.response} />
         </section>
       </div>
     );

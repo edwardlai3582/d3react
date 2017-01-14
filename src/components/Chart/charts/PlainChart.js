@@ -5,14 +5,13 @@ import GridNAxis from './elements/GridNAxis';
 
 class PlainChart extends Component{
   render(){
+    let datas = this.props.datas;
     let colors = this.props.colors;
-
     let svgWidth = this.props.svgWidth;
     let svgHeight = this.props.svgWidth*0.5;
     let w = svgWidth - (chartMargin.LEFT + chartMargin.RIGHT);
     let h = svgHeight - (chartMargin.TOP + chartMargin.BOTTOM);
 
-    let datas=this.props.datas;
     datas.forEach((data)=>{
       data.forEach((d) => {
           d.date = d3.isoParse(d.time);
