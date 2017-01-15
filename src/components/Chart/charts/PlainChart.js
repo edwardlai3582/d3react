@@ -41,6 +41,7 @@ class PlainChart extends Component{
             <GridNAxis x={x} y={y} w={w} h={h} xAxis={this.props.xAxis} yAxis={this.props.yAxis} xGrid={this.props.xGrid} yGrid={this.props.yGrid} />
 
             {childrenWithProps}
+
           </g>
           {(this.props.xLabel==="")?"":<g><text x={svgWidth - chartMargin.RIGHT} y={svgHeight} textAnchor="end" >{this.props.xLabel}</text></g>}
           {(this.props.yLabel==="")?"":<g><text x={chartMargin.LEFT - 5} y={chartMargin.TOP - 10} textAnchor="end" >{this.props.yLabel}</text></g>}
