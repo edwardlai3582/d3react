@@ -1,8 +1,8 @@
 {
-  "name": "juniper",
+  "name": "d3react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://illl48.github.io/Juniper",
+  "homepage": "https://illl48.github.io/d3react",
   "devDependencies": {
     "gh-pages": "^0.12.0",
     "react-scripts": "0.8.4"

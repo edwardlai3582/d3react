@@ -1,8 +1,8 @@
-##Juniper Coding Challenge
+##react with d3js
 
 Live Demo
 -------------
-https://illl48.github.io/Juniper/
+https://illl48.github.io/d3react/
 
 About
 -------------

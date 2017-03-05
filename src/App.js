@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>Juniper Networks UI Coding Challenge</h2>
+          <h2>d3React</h2>
         </div>
 
         <Chart />
